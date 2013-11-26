@@ -27,10 +27,6 @@
 	<classpathentry kind="src" path="src/plugins/userCreation/src/java"/>
 	<classpathentry kind="src" path="src/plugins/admin"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="target/openfire/lib/bouncycastle.jar"/>
-	<classpathentry kind="lib" path="target/openfire/lib/jtds.jar"/>
-	<classpathentry kind="lib" path="target/openfire/lib/mysql.jar"/>
-	<classpathentry kind="lib" path="target/openfire/lib/startup.jar"/>
 	<classpathentry kind="lib" path="build/lib/merge/commons-codec.jar"/>
 	<classpathentry kind="lib" path="build/lib/merge/commons-httpclient.jar"/>
 	<classpathentry kind="lib" path="build/lib/merge/commons-lang.jar"/>
@@ -107,7 +103,6 @@
 	<classpathentry kind="lib" path="build/lib/src/mina-filter-ssl-1.1.7-sources.jar"/>
 	<classpathentry kind="lib" path="build/lib/src/mina-integration-jmx-1.1.7-sources.jar"/>
 	<classpathentry kind="lib" path="build/lib/src/slf4j-log4j12-1.5.8-sources.jar"/>
-	<classpathentry kind="lib" path="target/openfire/lib/openfire.jar"/>
 	<classpathentry kind="lib" path="build/lib/coherence-work.jar"/>
 	<classpathentry kind="lib" path="build/lib/coherence.jar"/>
 	<classpathentry kind="lib" path="build/lib/tangosol.jar"/>
