@@ -276,7 +276,7 @@ public class AuthFactory {
         try {
             keyString = JiveGlobals.getProperty("passwordKey");
             if (keyString == null) {
-                keyString = StringUtils.randomString(15);
+                keyString = "RE5612PoDX7CmLl";
                 JiveGlobals.setProperty("passwordKey", keyString);
                 // Check to make sure that setting the property worked. It won't work,
                 // for example, when in setup mode.

@@ -106,5 +106,6 @@
 	<classpathentry kind="lib" path="build/lib/coherence-work.jar"/>
 	<classpathentry kind="lib" path="build/lib/coherence.jar"/>
 	<classpathentry kind="lib" path="build/lib/tangosol.jar"/>
+	<classpathentry kind="lib" path="target/openfire/lib/openfire.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -378,5 +378,7 @@ INSERT INTO ofUser (username, plainPassword, name, email, creationDate, modifica
 
 -- Entry for default conference service
 INSERT INTO ofMucService (serviceID, subdomain, isHidden) VALUES (1, 'conference', 0);
-
+#
+INSERT INTO ofproperty (name, propValue) VALUES ('gm.imgServer.path', 'http://cnpdgwnrnd56hmx/GMContent/userProfile');
+INSERT INTO ofproperty (name, propValue) VALUES ('user.photo.path', 'C:/GMServer/userProfile');
 commit;
