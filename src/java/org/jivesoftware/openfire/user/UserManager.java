@@ -483,4 +483,19 @@ public class UserManager implements IQResultListener {
             }
         }
     }
+
+	/**
+	* @Title: getUserNameByPlate
+	* @Description: current for test
+	* @return:String
+	* @author: liuwei
+	* @date: 2013年12月2日
+	* Modification History:
+	* Date  Author  Version  Description
+	* ---------------------------------------------------------*
+	* 2013年12月2日  liuwei v1.0.0   修改原因
+	*/
+	public String getUserNameByPlate(String plate) {
+		return "spring05";
+	}
 }

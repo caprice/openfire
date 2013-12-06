@@ -20,65 +20,70 @@
 
 package org.jivesoftware.openfire.handler;
 
+import java.util.Collections;
+import java.util.Iterator;
+
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.QName;
 import org.jivesoftware.openfire.IQHandlerInfo;
+import org.jivesoftware.openfire.XMPPServer;
 import org.jivesoftware.openfire.disco.ServerFeaturesProvider;
-import org.jivesoftware.util.XMPPDateTimeFormat;
+import org.jivesoftware.openfire.user.UserManager;
 import org.xmpp.packet.IQ;
 
-import java.text.DateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-
 /**
- * Implements the TYPE_IQ jabber:iq:plate protocol (plate info) as
- *. Allows Jabber entities to find a user by plate.  The server will respond with username.
- *
+ * Implements the TYPE_IQ jabber:iq:plate protocol (plate info) as . Allows
+ * Jabber entities to find a user by plate. The server will respond with
+ * username.
+ * 
  * @author Liu Wei
  */
-public class IQFindUserByPlateHandler extends IQHandler implements ServerFeaturesProvider {
+public class IQFindUserByPlateHandler extends IQHandler implements
+		ServerFeaturesProvider {
 
-    // todo: Make display text match the locale of user (xml:lang support)
-    private static final DateFormat DATE_FORMAT = DateFormat.getDateInstance(DateFormat.MEDIUM);
-    private static final DateFormat TIME_FORMAT = DateFormat.getTimeInstance(DateFormat.LONG);
+	private Element responseElement;
+	private IQHandlerInfo info;
+	private UserManager userManager;
 
-    private Element responseElement;
-    private IQHandlerInfo info;
+	public IQFindUserByPlateHandler() {
+		super("XMPP Server Time Handler");
+		info = new IQHandlerInfo("query", "jabber:iq:plate");
+		responseElement = DocumentHelper.createElement(QName.get("query",
+				"jabber:iq:plate"));
+		responseElement.addElement("username");
+	}
 
-    public IQFindUserByPlateHandler() {
-        super("XMPP Server Time Handler");
-        info = new IQHandlerInfo("query", "jabber:iq:plate");
-        responseElement = DocumentHelper.createElement(QName.get("query", "jabber:iq:plate"));
-        responseElement.addElement("username");
-    }
-
-    @Override
+	@Override
 	public IQ handleIQ(IQ packet) {
-        IQ response = null;
-        response = IQ.createResultIQ(packet);
-        response.setChildElement(buildResponse());
-        return response;
-    }
+		IQ response = null;
+		response = IQ.createResultIQ(packet);
+		String plate = packet.getFrom().getNode();
+		response.setChildElement(buildResponse(plate));
+		return response;
+	}
 
-    /**
-     * Build the responseElement packet
-     */
-    private Element buildResponse() {
-        Element response = responseElement.createCopy();
-        Date current = new Date();
-        response.element("username").setText(XMPPDateTimeFormat.formatOld(current));
-        return response;
-    }
+	/**
+	 * Build the responseElement packet
+	 */
+	private Element buildResponse(String plate) {
+		Element response = responseElement.createCopy();
+		response.element("username").setText(userManager.getUserNameByPlate(plate));
+		return response;
+	}
 
-    @Override
+	@Override
+	public void initialize(XMPPServer server) {
+		super.initialize(server);
+		userManager = server.getUserManager();
+	}
+
+	@Override
 	public IQHandlerInfo getInfo() {
-        return info;
-    }
+		return info;
+	}
 
-    public Iterator<String> getFeatures() {
-        return Collections.singleton("jabber:iq:plate").iterator();
-    }
+	public Iterator<String> getFeatures() {
+		return Collections.singleton("jabber:iq:plate").iterator();
+	}
 }
