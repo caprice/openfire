@@ -41,6 +41,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmpp.packet.IQ;
 import org.xmpp.packet.JID;
 import org.xmpp.packet.Message;
+import org.xmpp.packet.Message.Type;
 import org.xmpp.packet.PacketError;
 import org.xmpp.packet.Presence;
 import org.xmpp.packet.Roster;
@@ -212,6 +213,7 @@ public abstract class StanzaHandler {
             Message packet;
             try {
                 packet = new Message(doc, !validateJIDs());
+                sendReceiptToSender(packet);
             }
             catch (IllegalArgumentException e) {
                 Log.debug("Rejecting packet. JID malformed", e);
@@ -310,7 +312,22 @@ public abstract class StanzaHandler {
         }
     }
 
-    private IQ getIQ(Element doc) {
+    /**
+    * @Title: sendReceiptToSender
+    * @Description: send a message back to the sender to tell his/her message has been sent to server
+    * @return:void
+    * @author: liuwei
+    * @date: 2013Äê12ÔÂ17ÈÕ
+    */
+    private void sendReceiptToSender(Message message) {
+        Log.debug("send back receipt packet. ");
+        // The original packet contains a malformed JID so answer with an error.
+        message.setTo(session.getAddress());
+        message.setType(Type.headline);
+        session.process(message);
+	}
+
+	private IQ getIQ(Element doc) {
         Element query = doc.element("query");
         if (query != null && "jabber:iq:roster".equals(query.getNamespaceURI())) {
             return new Roster(doc);
